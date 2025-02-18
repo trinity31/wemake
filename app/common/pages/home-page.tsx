@@ -12,6 +12,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { PostCard } from "~/features/community/components/post-card";
 import { DotIcon, EyeIcon, HeartIcon } from "lucide-react";
 import { IdeaCard } from "~/features/ideas/components/idea-card";
+import { Badge } from "../components/ui/badge";
+import { JobCard } from "~/features/jobs/components/job-card";
+import { TeamCard } from "~/features/teams/components/team-card";
 
 export const meta: MetaFunction = () => {
   return [
@@ -89,6 +92,58 @@ export default function HomePage() {
             postedAt="12 hours ago"
             likeCount={12}
             claimed={index % 2 === 0}
+          />
+        ))}
+      </div>
+      <div className="grid grid-cols-4 gap-4">
+        <div>
+          <h2 className="text-5xl font-bold loading-tight tracking-tight">
+            Latest Jobs
+          </h2>
+          <p className="text-xl font-light text-foreground">
+            Find your dream job.
+          </p>
+          <Button variant="link" asChild className="text-lg p-0">
+            <Link to="/jobs">Explore all jobs &rarr;</Link>
+          </Button>
+        </div>
+        {Array.from({ length: 11 }).map((_, index) => (
+          <JobCard
+            id="jobId"
+            company="Tesla"
+            companyLogo="https://github.com/facebook.png"
+            companyHq="San Francisco, CA"
+            title="Software Engineer"
+            postedAt="12 hours ago"
+            type="Full-time"
+            positionLocation="Remote"
+            salary="$100,000 - $120,000"
+          />
+        ))}
+      </div>
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <h2 className="text-5xl font-bold loading-tight tracking-tight">
+            Find a team mate
+          </h2>
+          <p className="text-xl font-light text-foreground">
+            Join a team looking for a new member.
+          </p>
+          <Button variant="link" asChild className="text-lg p-0">
+            <Link to="/teams">Explore all teams &rarr;</Link>
+          </Button>
+        </div>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <TeamCard
+            id="teamId"
+            leaderUsername="lynn"
+            leaderAvatarUrl="https://github.com/inthetiger.png"
+            positions={[
+            "React Developer",
+            "Backend Developer",
+            "Product Manager",
+          ]}
+            projectDescription="a new social media platform."
           />
         ))}
       </div>

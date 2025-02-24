@@ -86,7 +86,7 @@ export default function DailyLeaderboardPage({
           <Link
             to={`/products/leaderboards/daily/${prevDay.year}/${prevDay.month}/${prevDay.day}`}
           >
-           &larr; {prevDay.toLocaleString(DateTime.DATE_SHORT)}
+            &larr; {prevDay.toLocaleString(DateTime.DATE_SHORT)}
           </Link>
         </Button>
         {!isToday ? (
@@ -100,7 +100,7 @@ export default function DailyLeaderboardPage({
         ) : null}
       </div>
       <div className="space-y-5 w-full max-w-screen-md mx-auto">
-        {Array.from({ length: 10 }).map((_, index) => (
+        {Array.from({ length: 50 }).map((_, index) => (
           <ProductCard
             id="productId"
             name="Product Name"

@@ -100,7 +100,7 @@ export default function DailyLeaderboardPage({
         ) : null}
       </div>
       <div className="space-y-5 w-full max-w-screen-md mx-auto">
-        {Array.from({ length: 50 }).map((_, index) => (
+        {Array.from({ length: 11 }).map((_, index) => (
           <ProductCard
             id="productId"
             name="Product Name"

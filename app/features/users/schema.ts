@@ -1,12 +1,17 @@
 import {
+  bigint,
+  boolean,
   jsonb,
   pgEnum,
   pgSchema,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
+import { products } from "../products/schema";
+import { posts } from "../community/schema";
 
 // 실제로 생성되지 않음 (users 테이블 이미 존재하므로), reference 를 하기 위해 정의하는 Fake table, 실제 테이블은 auth.users 테이블
 const users = pgSchema("auth").table("users", {
@@ -47,5 +52,77 @@ export const follows = pgTable("follows", {
   following_id: uuid().references(() => profiles.profile_id, {
     onDelete: "cascade",
   }),
+  created_at: timestamp().notNull().defaultNow(),
+});
+
+export const notificationType = pgEnum("notification_type", [
+  "follow",
+  "review",
+  "reply",
+  "mention",
+]);
+
+export const notifications = pgTable("notifications", {
+  notification_id: bigint({ mode: "number" })
+    .primaryKey()
+    .generatedAlwaysAsIdentity(),
+  source_id: uuid().references(() => profiles.profile_id, {
+    onDelete: "cascade",
+  }),
+  product_id: bigint({ mode: "number" }).references(() => products.product_id, {
+    onDelete: "cascade",
+  }),
+  post_id: bigint({ mode: "number" }).references(() => posts.post_id, {
+    onDelete: "cascade",
+  }),
+  target_id: uuid()
+    .references(() => profiles.profile_id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+  type: notificationType().notNull(),
+  created_at: timestamp().notNull().defaultNow(),
+});
+
+export const messageRooms = pgTable("message_rooms", {
+  message_room_id: bigint({ mode: "number" })
+    .primaryKey()
+    .generatedAlwaysAsIdentity(),
+  created_at: timestamp().notNull().defaultNow(),
+});
+
+export const messageRoomMembers = pgTable(
+  "message_room_members",
+  {
+    message_room_id: bigint({ mode: "number" }).references(
+      () => messageRooms.message_room_id,
+      {
+        onDelete: "cascade",
+      }
+    ),
+    profile_id: uuid().references(() => profiles.profile_id, {
+      onDelete: "cascade",
+    }),
+    created_at: timestamp().notNull().defaultNow(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.message_room_id, table.profile_id] }),
+  ]
+);
+
+export const messages = pgTable("messages", {
+  message_id: bigint({ mode: "number" })
+    .primaryKey()
+    .generatedAlwaysAsIdentity(),
+  message_room_id: bigint({ mode: "number" }).references(
+    () => messageRooms.message_room_id,
+    {
+      onDelete: "cascade",
+    }
+  ),
+  sender_id: uuid().references(() => profiles.profile_id, {
+    onDelete: "cascade",
+  }),
+  content: text().notNull(),
   created_at: timestamp().notNull().defaultNow(),
 });

@@ -22,6 +22,34 @@
       "when": 1740539529689,
       "tag": "0002_sweet_jackal",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1740540323735,
+      "tag": "0003_groovy_meltdown",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1740541173300,
+      "tag": "0004_moaning_iron_lad",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1740541750674,
+      "tag": "0005_nice_rachel_grey",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1740542564213,
+      "tag": "0006_dashing_jubilee",
+      "breakpoints": true
     }
   ]
 }

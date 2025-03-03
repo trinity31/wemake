@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import type { Route } from "./+types/weekly-leaderboard-page";
+import { Route } from "./+types/weekly-leaderboard-page";
 import { data, isRouteErrorResponse, Link } from "react-router";
 import { z } from "zod";
 import { Hero } from "~/common/components/hero";
@@ -29,7 +29,6 @@ export const meta: Route.MetaFunction = ({ params }) => {
     },
   ];
 };
-
 
 export const loader = ({ params }: Route.LoaderArgs) => {
   const { success, data: parsedData } = paramsSchema.safeParse(params);
@@ -90,7 +89,6 @@ export default function WeeklyLeaderboardPage({
           .toLocaleString(DateTime.DATE_SHORT)} - ${urlDate
           .endOf("week")
           .toLocaleString(DateTime.DATE_SHORT)}`}
-        description="The most popular products of the week"
       />
       <div className="flex items-center justify-center gap-2">
         <Button variant="secondary" asChild>
@@ -117,9 +115,9 @@ export default function WeeklyLeaderboardPage({
             id={`productId-${index}`}
             name="Product Name"
             description="Product Description"
-            commentCount={12}
-            viewCount={12}
-            upvoteCount={120}
+            commentsCount={12}
+            viewsCount={12}
+            votesCount={120}
           />
         ))}
       </div>

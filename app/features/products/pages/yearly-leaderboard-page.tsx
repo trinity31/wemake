@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import type { Route } from "./+types/yearly-leaderboard-page";
+import { Route } from "./+types/yearly-leaderboard-page";
 import { data, isRouteErrorResponse, Link } from "react-router";
 import { z } from "zod";
 import { Hero } from "~/common/components/hero";
@@ -78,8 +78,9 @@ export default function YearlyLeaderboardPage({
   return (
     <div className="space-y-10">
       <Hero
-        title={`Best of ${urlDate.toLocaleString({ year: "numeric" })}`}
-        description="The most popular products of the year"
+        title={`Best of ${urlDate.toLocaleString({
+          year: "numeric",
+        })}`}
       />
       <div className="flex items-center justify-center gap-2">
         <Button variant="secondary" asChild>
@@ -108,9 +109,9 @@ export default function YearlyLeaderboardPage({
             id={`productId-${index}`}
             name="Product Name"
             description="Product Description"
-            commentCount={12}
-            viewCount={12}
-            upvoteCount={120}
+            commentsCount={12}
+            viewsCount={12}
+            votesCount={120}
           />
         ))}
       </div>

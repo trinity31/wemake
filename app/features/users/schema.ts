@@ -13,8 +13,7 @@ import {
 import { products } from "../products/schema";
 import { posts } from "../community/schema";
 
-// 실제로 생성되지 않음 (users 테이블 이미 존재하므로), reference 를 하기 위해 정의하는 Fake table, 실제 테이블은 auth.users 테이블
-const users = pgSchema("auth").table("users", {
+export const users = pgSchema("auth").table("users", {
   id: uuid().primaryKey(),
 });
 

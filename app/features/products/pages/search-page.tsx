@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Route } from "./+types/search-page";
+import { Route } from "./+types/search-page";
 import { Hero } from "~/common/components/hero";
 import { ProductCard } from "../components/product-card";
 import ProductPagination from "~/common/components/product-pagination";
@@ -34,7 +34,7 @@ export default function SearchPage({ loaderData }: Route.ComponentProps) {
     <div className="space-y-10">
       <Hero
         title="Search"
-        description="Search for products by title or description"
+        subtitle="Search for products by title or description"
       />
       <Form className="flex justify-center h-14 max-w-screen-sm items-center gap-2 mx-auto">
         <Input
@@ -51,9 +51,9 @@ export default function SearchPage({ loaderData }: Route.ComponentProps) {
             id={`productId-${index}`}
             name="Product Name"
             description="Product Description"
-            commentCount={12}
-            viewCount={12}
-            upvoteCount={120}
+            commentsCount={12}
+            viewsCount={12}
+            votesCount={120}
           />
         ))}
       </div>

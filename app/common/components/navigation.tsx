@@ -2,11 +2,11 @@ import { Link } from "react-router";
 import { Separator } from "~/common/components/ui/separator";
 import {
   NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
   NavigationMenuContent,
+  NavigationMenuItem,
   NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
 import { cn } from "~/lib/utils";
@@ -37,12 +37,12 @@ const menus = [
     items: [
       {
         name: "Leaderboards",
-        description: "View the leaderboards for the products",
+        description: "See the top performers in your community",
         to: "/products/leaderboards",
       },
       {
         name: "Categories",
-        description: "View the categories for the products",
+        description: "See the top categories in your community",
         to: "/products/categories",
       },
       {
@@ -52,12 +52,12 @@ const menus = [
       },
       {
         name: "Submit a Product",
-        description: "Submit a product to the platform",
+        description: "Submit a product to our community",
         to: "/products/submit",
       },
       {
         name: "Promote",
-        description: "Promote a product to the platform",
+        description: "Promote a product to our community",
         to: "/products/promote",
       },
     ],
@@ -68,26 +68,27 @@ const menus = [
     items: [
       {
         name: "Remote Jobs",
-        description: "Find the remote jobs in our community",
-        to: "/jobs?type=remote",
+        description: "Find a remote job in our community",
+        to: "/jobs?location=remote",
       },
       {
-        name: "Full Time Jobs",
-        description: "Find the full time jobs in our community",
+        name: "Full-Time Jobs",
+        description: "Find a full-time job in our community",
         to: "/jobs?type=full-time",
       },
       {
         name: "Freelance Jobs",
-        description: "Find the freelance jobs in our community",
+        description: "Find a freelance job in our community",
         to: "/jobs?type=freelance",
       },
       {
         name: "Internships",
-        description: "Find the internships in our community",
+        description: "Find an internship in our community",
+        to: "/jobs?type=internship",
       },
       {
-        name: "Submit a Job",
-        description: "Submit a job to the platform",
+        name: "Post a Job",
+        description: "Post a job to our community",
         to: "/jobs/submit",
       },
     ],
@@ -120,7 +121,7 @@ const menus = [
   },
   {
     name: "IdeasGPT",
-    to: "/ideasgpt",
+    to: "/ideas",
   },
   {
     name: "Teams",
@@ -140,12 +141,17 @@ const menus = [
   },
 ];
 
-export default function Navigation({ isLoggedIn,
+export default function Navigation({
+  isLoggedIn,
   hasNotifications,
   hasMessages,
- }: { isLoggedIn: boolean, hasNotifications: boolean, hasMessages: boolean }) {
+}: {
+  isLoggedIn: boolean;
+  hasNotifications: boolean;
+  hasMessages: boolean;
+}) {
   return (
-    <nav className="flex px-20 h-15 items-center justify-between backdrop-blur fixed top-2 left-0 right-0 z-50 bg-background/50">
+    <nav className="flex px-20 h-16 items-center justify-between backdrop-blur fixed top-0 left-0 right-0 z-50 bg-background/50">
       <div className="flex items-center">
         <Link to="/" className="font-bold tracking-tighter text-lg">
           wemake
@@ -161,41 +167,37 @@ export default function Navigation({ isLoggedIn,
                       <NavigationMenuTrigger>{menu.name}</NavigationMenuTrigger>
                     </Link>
                     <NavigationMenuContent>
-                      <ul className="grid w-[500px] font-light gap-3 p-4 grid-cols-2">
-                        {menu.items?.map(
-                          (item) =>
-                            item.to && (
-                              <NavigationMenuItem
-                                key={item.name}
-                                className={cn([
-                                  "select-none rounded-md transition-colors hover:bg-accent",
-                                  item.to === "/products/promote" &&
-                                    "col-span-2 bg-primary/10 hover:bg-primary/20 focus:bg-primary/20",
-                                  item.to === "/jobs/submit" &&
-                                    "col-span-2 bg-primary/10 hover:bg-primary/20 focus:bg-primary/20",
-                                ])}
+                      <ul className="grid w-[600px] font-light gap-3 p-4 grid-cols-2">
+                        {menu.items?.map((item) => (
+                          <NavigationMenuItem
+                            key={item.name}
+                            className={cn([
+                              "select-none rounded-md transition-colors focus:bg-accent  hover:bg-accent",
+                              (item.to === "/products/promote" ||
+                                item.to === "/jobs/submit") &&
+                                "col-span-2 bg-primary/10 hover:bg-primary/20 focus:bg-primary/20",
+                            ])}
+                          >
+                            <NavigationMenuLink>
+                              <Link
+                                className="p-3 space-y-1 block leading-none no-underline outline-none"
+                                to={item.to}
                               >
-                                <NavigationMenuLink asChild>
-                                  <Link
-                                    className="p-3 space-y-1 block leading-none no-underline outline-none"
-                                    to={item.to}
-                                  >
-                                    <span className="text-sm font-medium leading-none">
-                                      {item.name}
-                                    </span>
-                                    <p className="text-sm leading-snug text-muted-foreground">
-                                      {item.description}
-                                    </p>
-                                  </Link>
-                                </NavigationMenuLink>
-                              </NavigationMenuItem>
-                            )
-                        )}
+                                <span className="text-sm font-medium leading-none">
+                                  {item.name}
+                                </span>
+                                <p className="text-sm leading-snug text-muted-foreground">
+                                  {item.description}
+                                </p>
+                              </Link>
+                            </NavigationMenuLink>
+                          </NavigationMenuItem>
+                        ))}
                       </ul>
                     </NavigationMenuContent>
                   </>
                 ) : (
-                  <Link to={menu.to} className={navigationMenuTriggerStyle()}>
+                  <Link className={navigationMenuTriggerStyle()} to={menu.to}>
                     {menu.name}
                   </Link>
                 )}
@@ -205,54 +207,52 @@ export default function Navigation({ isLoggedIn,
         </NavigationMenu>
       </div>
       {isLoggedIn ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <Button size="icon" variant="ghost" asChild className="relative">
             <Link to="/my/notifications">
-              <BellIcon className="w-4 h-4" />
+              <BellIcon className="size-4" />
               {hasNotifications && (
-                <div className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></div>
+                <div className="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full" />
               )}
             </Link>
           </Button>
           <Button size="icon" variant="ghost" asChild className="relative">
             <Link to="/my/messages">
-              <MessageCircleIcon className="w-4 h-4" />
+              <MessageCircleIcon className="size-4" />
               {hasMessages && (
-                <div className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></div>
+                <div className="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full" />
               )}
             </Link>
           </Button>
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src="https://github.com/serranoarevalo.png" />
                 <AvatarFallback>N</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel className="flex flex-col">
-                <span className="fomt-medium">John Doe</span>
-                <span className="text-muted-foreground text-sm">
-                  john@doe.com
-                </span>
+                <span className="font-medium">John Doe</span>
+                <span className="text-xs text-muted-foreground">@username</span>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/my/dashboard">
-                    <BarChart3Icon className="w-4 h-4 mr-2" />
+                    <BarChart3Icon className="size-4 mr-2" />
                     Dashboard
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/my/profile">
-                    <UserIcon className="w-4 h-4 mr-2" />
+                    <UserIcon className="size-4 mr-2" />
                     Profile
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/my/settings">
-                    <SettingsIcon className="w-4 h-4 mr-2" />
+                    <SettingsIcon className="size-4 mr-2" />
                     Settings
                   </Link>
                 </DropdownMenuItem>
@@ -260,7 +260,7 @@ export default function Navigation({ isLoggedIn,
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild className="cursor-pointer">
                 <Link to="/auth/logout">
-                  <LogOutIcon className="w-4 h-4 mr-2" />
+                  <LogOutIcon className="size-4 mr-2" />
                   Logout
                 </Link>
               </DropdownMenuItem>
@@ -273,7 +273,7 @@ export default function Navigation({ isLoggedIn,
             <Link to="/auth/login">Login</Link>
           </Button>
           <Button asChild>
-            <Link to="/auth/signup">Join</Link>
+            <Link to="/auth/join">Join</Link>
           </Button>
         </div>
       )}

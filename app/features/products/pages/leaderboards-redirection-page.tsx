@@ -1,12 +1,11 @@
 import { data, redirect } from "react-router";
-import type { Route } from "./+types/leaderboards-redirection-page";
+import { Route } from "./+types/leaderboards-redirection-page";
 import { DateTime } from "luxon";
-export function loader({ params, request }: Route.LoaderArgs) {
+
+export function loader({ params }: Route.LoaderArgs) {
   const { period } = params;
-
   let url: string;
-  const today = DateTime.now().setZone("Asia/Seoul")
-
+  const today = DateTime.now().setZone("Asia/Seoul");
   if (period === "daily") {
     url = `/products/leaderboards/daily/${today.year}/${today.month}/${today.day}`;
   } else if (period === "weekly") {
@@ -18,6 +17,5 @@ export function loader({ params, request }: Route.LoaderArgs) {
   } else {
     return data(null, { status: 400 });
   }
-
   return redirect(url);
 }

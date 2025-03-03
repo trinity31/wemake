@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import type { Route } from "./+types/monthly-leaderboard-page";
+import { Route } from "./+types/monthly-leaderboard-page";
 import { data, isRouteErrorResponse, Link } from "react-router";
 import { z } from "zod";
 import { Hero } from "~/common/components/hero";
@@ -87,7 +87,6 @@ export default function MonthlyLeaderboardPage({
           month: "long",
           year: "2-digit",
         })}`}
-        description="The most popular products of the month"
       />
       <div className="flex items-center justify-center gap-2">
         <Button variant="secondary" asChild>
@@ -122,9 +121,9 @@ export default function MonthlyLeaderboardPage({
             id={`productId-${index}`}
             name="Product Name"
             description="Product Description"
-            commentCount={12}
-            viewCount={12}
-            upvoteCount={120}
+            commentsCount={12}
+            viewsCount={12}
+            votesCount={120}
           />
         ))}
       </div>

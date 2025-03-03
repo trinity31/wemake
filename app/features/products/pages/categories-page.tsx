@@ -1,25 +1,26 @@
-import type { Route } from "../../../+types/categories";
-import type { MetaFunction } from "@react-router/types";
+import { Hero } from "~/common/components/hero";
+import { CategoryCard } from "../components/category-card";
+import { Route } from "./+types/categories-page";
 
-export function meta(): MetaFunction {
-  return [{ title: "카테고리 | Product Hunt" }];
-}
+export const meta: Route.MetaFunction = () => [
+  { title: "Categories | ProductHunt Clone" },
+  { name: "description", content: "Browse products by category" },
+];
 
-export function loader({ request }: Route.LoaderArgs) {
-  return {
-    categories: []
-  };
-}
-
-export default function CategoriesPage({ loaderData }: Route.ComponentProps) {
-  const { categories } = loaderData;
-
+export default function CategoriesPage() {
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">카테고리</h1>
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {/* 카테고리 목록 구현 예정 */}
+    <div className="space-y-10">
+      <Hero title="Categories" subtitle="Browse products by category" />
+      <div className="grid grid-cols-4 gap-10">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <CategoryCard
+            key={`categoryId-${index}`}
+            id={`categoryId-${index}`}
+            name="Category Name"
+            description="Category Description"
+          />
+        ))}
       </div>
-    </main>
+    </div>
   );
-} 
+}

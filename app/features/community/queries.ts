@@ -1,5 +1,6 @@
 //import db from "~/db"
-// Using Drizzle ORM to query the database
+
+// 1. Using Drizzle ORM to query the database
 // import { posts, postUpvotes, topics } from "./schema"
 // import { profiles } from "../users/schema";
 // import { asc, count, eq } from "drizzle-orm"
@@ -41,6 +42,40 @@ import client from "~/supa-client"
 //   return allPosts;
 // };
 
+
+// 2. Fetching data using supabase client
+// export const getTopics = async () => {
+//   const { data, error } = await client.from("topics").select("name, slug");
+
+//   if (error) throw new Error(error.message);
+
+//   return data;
+// }
+
+// export const getPosts = async () => {
+//   const { data, error } = await client.from("posts").select(`
+//     post_id,
+//     title, 
+//     created_at,
+//     topic: topics!inner (
+//       name
+//     ),
+//     author: profiles!posts_profile_id_profiles_profile_id_fk!inner (
+//       name,
+//       avatar,
+//       username
+//     ),
+//     post_upvotes (
+//       count
+//     )
+//     `
+//   );
+
+//   if (error) throw new Error(error.message);
+
+//   return data;
+// }
+
 export const getTopics = async () => {
   const { data, error } = await client.from("topics").select("name, slug");
 
@@ -50,23 +85,7 @@ export const getTopics = async () => {
 }
 
 export const getPosts = async () => {
-  const { data, error } = await client.from("posts").select(`
-    post_id,
-    title, 
-    created_at,
-    topic: topics!inner (
-      name
-    ),
-    author: profiles!posts_profile_id_profiles_profile_id_fk!inner (
-      name,
-      avatar,
-      username
-    ),
-    post_upvotes (
-      count
-    )
-    `
-  );
+  const { data, error } = await client.from("community_post_list_view").select(`*`);
 
   if (error) throw new Error(error.message);
 

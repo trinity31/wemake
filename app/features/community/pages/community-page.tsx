@@ -19,12 +19,14 @@ export const meta: Route.MetaFunction = () => {
 };
 
 export const loader = async () => {
-  const topics = await getTopics();
-  const posts = await getPosts();
+  // const topics = await getTopics();
+  // const posts = await getPosts();
+  const [topics, posts] = await Promise.all([getTopics(), getPosts()]);
   return { topics, posts };
 };
 
 export default function CommunityPage({ loaderData }: Route.ComponentProps) {
+  const { topics, posts } = loaderData;
   const [searchParams, setSearchParams] = useSearchParams();
   const sorting = searchParams.get("sorting") || "newest";
   const period = searchParams.get("period") || "all";

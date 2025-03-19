@@ -34,7 +34,7 @@ export const loader = async () => {
   const jobs = await getJobs({ limit: 11 });
   const teams = await getTeams({ limit: 7 });
   return { products, posts, ideas, jobs, teams };
-}
+};
 
 export default function HomePage({ loaderData }: Route.ComponentProps) {
   return (
@@ -56,7 +56,7 @@ export default function HomePage({ loaderData }: Route.ComponentProps) {
             key={product.product_id}
             id={product.product_id}
             name={product.name}
-            description={product.description}
+            description={product.tagline}
             reviewsCount={product.reviews}
             viewsCount={product.views}
             votesCount={product.upvotes}

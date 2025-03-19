@@ -120,7 +120,7 @@ export const getPagesBySearch = async ({ query }: { query: string }) => {
   return Math.ceil(count / PAGE_SIZE);
 };
 
-export const getProductById = async (productId: string) => {
+export const getProductById = async (productId: number) => {
   const { data, error } = await client
     .from("product_overview_view")
     .select("*")
@@ -130,7 +130,7 @@ export const getProductById = async (productId: string) => {
   return data;
 };
 
-export const getReviews = async (productId: string) => {
+export const getReviews = async (productId: number) => {
   const { data, error } = await client
     .from("reviews")
     .select(

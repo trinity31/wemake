@@ -64,6 +64,20 @@
       "when": 1741405433112,
       "tag": "0008_flat_purple_man",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1742348449252,
+      "tag": "0009_concerned_rhino",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1742349633915,
+      "tag": "0010_open_vampiro",
+      "breakpoints": true
     }
   ]
 }

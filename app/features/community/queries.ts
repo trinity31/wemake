@@ -5,7 +5,8 @@
 // import { profiles } from "../users/schema";
 // import { asc, count, eq } from "drizzle-orm"
 
-import client from "~/supa-client"
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "~/supa-client";
 import { DateTime } from "luxon";
 // export const getTopics = async () => {
 //   const allTopics = await db.select({
@@ -76,7 +77,7 @@ import { DateTime } from "luxon";
 //   return data;
 // }
 
-export const getTopics = async () => {
+export const getTopics = async (client: SupabaseClient<Database>) => {
   const { data, error } = await client.from("topics").select("name, slug");
 
   if (error) throw new Error(error.message);
@@ -84,7 +85,9 @@ export const getTopics = async () => {
   return data;
 }
 
-export const getPosts = async ({
+export const getPosts = async (
+  client: SupabaseClient<Database>,
+  {
   limit,
   sorting,
   period = "all",
@@ -96,7 +99,7 @@ export const getPosts = async ({
   period?: "all" | "today" | "week" | "month" | "year";
   keyword?: string;
   topic?: string;
-}) => {
+  }) => {
   const baseQuery = client
     .from("community_post_list_view")
     .select(`*`)
@@ -134,7 +137,10 @@ export const getPosts = async ({
   return data;
 };
 
-export const getPostById = async (postId: string) => {
+export const getPostById = async (
+  client: SupabaseClient<Database>,
+  postId: number
+) => {
   const { data, error } = await client
     .from("community_post_detail")
     .select("*")
@@ -144,7 +150,10 @@ export const getPostById = async (postId: string) => {
   return data;
 };
 
-export const getReplies = async (postId: string) => {
+export const getReplies = async (
+  client: SupabaseClient<Database>,
+  postId: number
+) => {
   const replyQuery = `
     post_reply_id,
     reply,

@@ -1,6 +1,9 @@
-import client from "~/supa-client";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "~/supa-client";
 
-export const getJobs = async ({
+export const getJobs = async (
+  client: SupabaseClient<Database>,
+  {
   limit,
   location,
   type,
@@ -44,7 +47,10 @@ export const getJobs = async ({
   return data;
 };
 
-export const getJobById = async (jobId: string) => {
+export const getJobById = async (
+  client: SupabaseClient<Database>,
+  jobId: string
+) => {
   const { data, error } = await client
     .from("jobs")
     .select("*")

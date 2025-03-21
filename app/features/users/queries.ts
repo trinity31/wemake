@@ -1,4 +1,3 @@
-// all the queries for the users feature
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "~/supa-client";
 import { productListSelect } from "../products/queries";
@@ -6,7 +5,7 @@ import { redirect } from "react-router";
 
 export const getUserProfile = async (
   client: SupabaseClient<Database>,
-  username: string
+  { username }: { username: string }
 ) => {
   const { data, error } = await client
     .from("profiles")
@@ -40,7 +39,10 @@ export const getUserById = async (
         profile_id,
         name,
         username,
-        avatar 
+        avatar,
+        headline,
+        bio,
+        role
         `
     )
     .eq("profile_id", id)
@@ -53,7 +55,7 @@ export const getUserById = async (
 
 export const getUserProducts = async (
   client: SupabaseClient<Database>,
-  username: string
+  { username }: { username: string }
 ) => {
   const { data, error } = await client
     .from("products")
@@ -74,7 +76,7 @@ export const getUserProducts = async (
 
 export const getUserPosts = async (
   client: SupabaseClient<Database>,
-  username: string
+  { username }: { username: string }
 ) => {
   const { data, error } = await client
     .from("community_post_list_view")
@@ -92,4 +94,18 @@ export const getLoggedInUserId = async (client: SupabaseClient<Database>) => {
     throw redirect("/auth/login");
   }
   return data.user.id;
+};
+
+export const getProductsByUserId = async (
+  client: SupabaseClient<Database>,
+  { userId }: { userId: string }
+) => {
+  const { data, error } = await client
+    .from("products")
+    .select(`name, product_id`)
+    .eq("profile_id", userId);
+  if (error) {
+    throw error;
+  }
+  return data;
 };
